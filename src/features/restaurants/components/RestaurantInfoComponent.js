@@ -1,8 +1,8 @@
-import { Text, View, Image } from "react-native";
+import { View, Image } from "react-native";
 import React from "react";
 import { Card } from "react-native-paper";
 import styled from "styled-components";
-
+import Text from "../../../components/Text";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import Spacer from "../../../components/Spacer";
 
@@ -18,12 +18,6 @@ const RestaurantCardCover = styled(Card.Cover)`
 const Address = styled(Text)`
   font-family : ${(props) => props.theme.fonts.body}
   font-size : ${(props) => props.theme.fontSizes.caption}
-`;
-
-const Title = styled(Text)`
-  font-family : ${(props) => props.theme.fonts.heading}
-  font-size:${(props) => props.theme.fontSizes.body}
-  color: ${(props) => props.theme.colors.ui.primary};
 `;
 
 const Info = styled(View)`
@@ -47,7 +41,10 @@ const SectionEnd = styled(View)`
   justify-content: flex-end;
 `;
 
-const Open = styled(Icon)``;
+const CustomIcon = styled(Image)`
+  width: 15px;
+  height: 15px;
+`;
 
 export const RestaurantInfoComponent = ({ restaurant = {} }) => {
   const {
@@ -68,18 +65,16 @@ export const RestaurantInfoComponent = ({ restaurant = {} }) => {
     <RestaurantCard elevation={5}>
       <RestaurantCardCover key={name} source={{ uri: photos[0] }} />
       <Info>
-        <Title>{name}</Title>
+        <Text variant="label">{name}</Text>
         <Section>
           <Rating>
             {ratingArray.map((currelem, index) => (
-              <Open name="star" size={24} color="#f2d533" key={index} />
+              <Icon name="star" size={24} color="#f2d533" key={index} />
             ))}
           </Rating>
           <SectionEnd>
             {isClosedTemporarily && (
-              <Text variant="label" style={{ color: "red" }}>
-                CLOSED TEMPORARILY
-              </Text>
+              <Text variant="error">CLOSED TEMPORARILY</Text>
             )}
             <Spacer position="left" size="large">
               {isOpenNow && (
@@ -87,7 +82,7 @@ export const RestaurantInfoComponent = ({ restaurant = {} }) => {
               )}
             </Spacer>
             <Spacer position="left" size="large">
-              <Image style={{ height: 15, width: 15 }} source={{ uri: icon }} />
+              <CustomIcon source={{ uri: icon }} />
             </Spacer>
           </SectionEnd>
         </Section>
