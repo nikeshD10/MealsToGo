@@ -1,50 +1,17 @@
-import { View, Image } from "react-native";
 import React from "react";
-import { Card } from "react-native-paper";
-import styled from "styled-components";
-import Text from "../../../components/Text";
+import CustomText from "../../../components/Text";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import Spacer from "../../../components/Spacer";
-
-const RestaurantCard = styled(Card)`
-  background-color: ${(props) => props.theme.colors.bg.primary};
-`;
-
-const RestaurantCardCover = styled(Card.Cover)`
-  padding: ${(props) => props.theme.space[3]};
-  background-color: ${(props) => props.theme.colors.bg.primary};
-`;
-
-const Address = styled(Text)`
-  font-family : ${(props) => props.theme.fonts.body}
-  font-size : ${(props) => props.theme.fontSizes.caption}
-`;
-
-const Info = styled(View)`
-  padding: ${(props) => props.theme.space[2]};
-`;
-
-const Rating = styled(View)`
-  padding-top: ${(props) => props.theme.space[2]};
-  padding-bottom: ${(props) => props.theme.space[2]};
-  flex-direction: row;
-`;
-
-const Section = styled(View)`
-  flex-direction: row;
-  align-items: center;
-`;
-
-const SectionEnd = styled(View)`
-  flex: 1;
-  flex-direction: row;
-  justify-content: flex-end;
-`;
-
-const CustomIcon = styled(Image)`
-  width: 15px;
-  height: 15px;
-`;
+import {
+  RestaurantCard,
+  RestaurantCardCover,
+  Address,
+  Info,
+  Rating,
+  Section,
+  SectionEnd,
+  CustomIcon,
+} from "./RestaurantInfoComponentStyle";
 
 export const RestaurantInfoComponent = ({ restaurant = {} }) => {
   const {
@@ -65,7 +32,7 @@ export const RestaurantInfoComponent = ({ restaurant = {} }) => {
     <RestaurantCard elevation={5}>
       <RestaurantCardCover key={name} source={{ uri: photos[0] }} />
       <Info>
-        <Text variant="label">{name}</Text>
+        <CustomText variant="label">{name}</CustomText>
         <Section>
           <Rating>
             {ratingArray.map((currelem, index) => (
@@ -74,11 +41,11 @@ export const RestaurantInfoComponent = ({ restaurant = {} }) => {
           </Rating>
           <SectionEnd>
             {isClosedTemporarily && (
-              <Text variant="error">CLOSED TEMPORARILY</Text>
+              <CustomText variant="error">CLOSED TEMPORARILY</CustomText>
             )}
             <Spacer position="left" size="large">
               {isOpenNow && (
-                <Open name="silverware" size={24} color="#f2d533" />
+                <Icon name="silverware" size={24} color="#f2d533" />
               )}
             </Spacer>
             <Spacer position="left" size="large">

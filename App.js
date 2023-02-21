@@ -1,4 +1,4 @@
-import { StyleSheet, StatusBar, Text, View } from "react-native";
+import { StatusBar } from "react-native";
 import RestaurantScreen from "./src/features/restaurants/screens/RestaurantScreen";
 import { ThemeProvider } from "styled-components";
 import { theme } from "./src/infrastructure/theme/index";
@@ -40,5 +40,3 @@ export default function App() {
     </>
   );
 }
-
-const styles = StyleSheet.create({});
