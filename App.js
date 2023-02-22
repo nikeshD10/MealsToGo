@@ -9,8 +9,42 @@ import {
   Oswald_400Regular,
 } from "@expo-google-fonts/oswald";
 import { useFonts as useLato, Lato_400Regular } from "@expo-google-fonts/lato";
+import { NavigationContainer } from "@react-navigation/native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import Ionicons from "react-native-vector-icons/Ionicons";
 
 SplashScreen.preventAutoHideAsync();
+
+const Tab = createBottomTabNavigator();
+
+const TAB_ICON = {
+  Restaurants: "md-restaurant",
+  Map: "md-map",
+  Settings: "md-settings",
+};
+
+const Settings = () => (
+  <View>
+    <Text>Settings</Text>
+  </View>
+);
+
+const Map = () => (
+  <View>
+    <Text>Map</Text>
+  </View>
+);
+
+const createScreenOptions = ({ route }) => {
+  const iconName = TAB_ICON[route.name];
+  return {
+    tabBarIcon: ({ size, color }) => (
+      <Ionicons name={iconName} size={size} color={color} />
+    ),
+    tabBarActiveTintColor: "tomato",
+    tabBarInactiveTintColor: "gray",
+  };
+};
 
 export default function App() {
   const [oswaldLoaded] = useOswald({
@@ -34,7 +68,13 @@ export default function App() {
   return (
     <>
       <ThemeProvider theme={theme}>
-        <RestaurantScreen />
+        <NavigationContainer>
+          <Tab.Navigator screenOptions={createScreenOptions}>
+            <Tab.Screen name="Restaurants" component={RestaurantScreen} />
+            <Tab.Screen name="Map" component={Map} />
+            <Tab.Screen name="Settings" component={Settings} />
+          </Tab.Navigator>
+        </NavigationContainer>
       </ThemeProvider>
       <StatusBar backgroundColor="skyblue" />
     </>
