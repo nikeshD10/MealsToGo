@@ -1,4 +1,4 @@
-import { StatusBar } from "react-native";
+import { StatusBar, View, Text } from "react-native";
 import RestaurantScreen from "./src/features/restaurants/screens/RestaurantScreen";
 import { ThemeProvider } from "styled-components";
 import { theme } from "./src/infrastructure/theme/index";
@@ -12,6 +12,7 @@ import { useFonts as useLato, Lato_400Regular } from "@expo-google-fonts/lato";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import { RestaurantContextProvider } from "./src/services/restaurants/restaurantContext";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -68,13 +69,15 @@ export default function App() {
   return (
     <>
       <ThemeProvider theme={theme}>
-        <NavigationContainer>
-          <Tab.Navigator screenOptions={createScreenOptions}>
-            <Tab.Screen name="Restaurants" component={RestaurantScreen} />
-            <Tab.Screen name="Map" component={Map} />
-            <Tab.Screen name="Settings" component={Settings} />
-          </Tab.Navigator>
-        </NavigationContainer>
+        <RestaurantContextProvider>
+          <NavigationContainer>
+            <Tab.Navigator screenOptions={createScreenOptions}>
+              <Tab.Screen name="Restaurants" component={RestaurantScreen} />
+              <Tab.Screen name="Map" component={Map} />
+              <Tab.Screen name="Settings" component={Settings} />
+            </Tab.Navigator>
+          </NavigationContainer>
+        </RestaurantContextProvider>
       </ThemeProvider>
       <StatusBar backgroundColor="skyblue" />
     </>
