@@ -5,13 +5,11 @@ import styled from "styled-components";
 import { RestaurantInfoComponent } from "../components/RestaurantInfoComponent";
 import Spacer from "../../../components/Spacer";
 import { RestaurantContext } from "../../../services/restaurants/restaurantContext";
+import { locationRequest } from "../../../services/restaurants/location/locationService";
+import SearchComponent from "../components/SearchComponent";
 
 const MainView = styled(View)`
   flex: 1;
-`;
-
-const SearchContainer = styled(View)`
-  padding: ${(props) => props.theme.space[3]};
 `;
 
 const LoadingIndicator = styled(ActivityIndicator)`
@@ -24,9 +22,7 @@ const RestaurantScreen = () => {
   const { isLoading, error, restaurants } = useContext(RestaurantContext);
   return (
     <MainView>
-      <SearchContainer style={styles.search}>
-        <Searchbar />
-      </SearchContainer>
+      <SearchComponent />
       {isLoading ? (
         <LoadingIndicator animating={true} color={MD2Colors.red800} />
       ) : (
