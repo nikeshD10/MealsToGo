@@ -8,7 +8,7 @@ import MapScreen from "../../../src/features/maps/screens/MapScreen";
 const Tab = createBottomTabNavigator();
 
 const TAB_ICON = {
-  Restaurants: "md-restaurant",
+  TabRestaurants: "md-restaurant",
   Map: "md-map",
   Settings: "md-settings",
 };
@@ -27,6 +27,7 @@ const createScreenOptions = ({ route }) => {
     ),
     tabBarActiveTintColor: "tomato",
     tabBarInactiveTintColor: "gray",
+    headerShown: false,
   };
 };
 
