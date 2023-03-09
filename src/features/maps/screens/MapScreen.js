@@ -4,6 +4,7 @@ import MapView, { Marker, Callout } from "react-native-maps";
 import Search from "../components/Search";
 import { LocationContext } from "../../../services/restaurants/location/locationContext";
 import { RestaurantContext } from "../../../services/restaurants/restaurantContext";
+import MapCallout from "../components/MapCallout";
 
 const MapScreen = () => {
   const { location } = useContext(LocationContext);
@@ -42,7 +43,7 @@ const MapScreen = () => {
               >
                 {/* // If you don't use the callout then instead of the red marker logo text of restaurant name will be render in the respective restaurant location. So callout helps to render inside details */}
                 <Callout>
-                  <Text>{restaurant.name}</Text>
+                  <MapCallout restaurant={restaurant} />
                 </Callout>
               </Marker>
             );
