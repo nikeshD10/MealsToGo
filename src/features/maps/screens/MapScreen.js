@@ -6,7 +6,7 @@ import { LocationContext } from "../../../services/restaurants/location/location
 import { RestaurantContext } from "../../../services/restaurants/restaurantContext";
 import MapCallout from "../components/MapCallout";
 
-const MapScreen = () => {
+const MapScreen = ({ navigation }) => {
   const { location } = useContext(LocationContext);
   const { restaurants = [] } = useContext(RestaurantContext);
   const [latDelta, setLatDelta] = useState(0);
@@ -42,7 +42,11 @@ const MapScreen = () => {
                 }}
               >
                 {/* // If you don't use the callout then instead of the red marker logo text of restaurant name will be render in the respective restaurant location. So callout helps to render inside details */}
-                <Callout>
+                <Callout
+                  onPress={() =>
+                    navigation.navigate("RestaurantDetail", { restaurant })
+                  }
+                >
                   <MapCallout restaurant={restaurant} />
                 </Callout>
               </Marker>
