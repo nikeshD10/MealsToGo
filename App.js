@@ -14,6 +14,7 @@ import { useFonts as useLato, Lato_400Regular } from "@expo-google-fonts/lato";
 //  -----------------    For the Contexts   --------------------------------
 import { RestaurantContextProvider } from "./src/services/restaurants/restaurantContext";
 import { LocationContextProvider } from "./src/services/restaurants/location/locationContext";
+import { FavouriteContextProvider } from "./src/services/favourites/FavouriteContext";
 import Navigation from "./src/infrastructure/navigation/index";
 
 SplashScreen.preventAutoHideAsync();
@@ -40,11 +41,13 @@ export default function App() {
   return (
     <>
       <ThemeProvider theme={theme}>
-        <LocationContextProvider>
-          <RestaurantContextProvider>
-            <Navigation />
-          </RestaurantContextProvider>
-        </LocationContextProvider>
+        <FavouriteContextProvider>
+          <LocationContextProvider>
+            <RestaurantContextProvider>
+              <Navigation />
+            </RestaurantContextProvider>
+          </LocationContextProvider>
+        </FavouriteContextProvider>
       </ThemeProvider>
       <StatusBar backgroundColor="skyblue" />
     </>

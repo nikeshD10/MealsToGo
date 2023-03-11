@@ -1,4 +1,5 @@
 import React from "react";
+import { View } from "react-native";
 import CustomText from "../../../components/Text";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import Spacer from "../../../components/Spacer";
@@ -12,6 +13,7 @@ import {
   SectionEnd,
   CustomIcon,
 } from "./RestaurantInfoComponentStyle";
+import FavouriteComponent from "../../../components/favourites/FavouriteComponent";
 
 export const RestaurantInfoComponent = ({ restaurant = {} }) => {
   const {
@@ -30,7 +32,11 @@ export const RestaurantInfoComponent = ({ restaurant = {} }) => {
 
   return (
     <RestaurantCard elevation={5}>
-      <RestaurantCardCover key={name} source={{ uri: photos[0] }} />
+      <View>
+        <FavouriteComponent restaurant={restaurant} />
+        <RestaurantCardCover key={name} source={{ uri: photos[0] }} />
+      </View>
+
       <Info>
         <CustomText variant="label">{name}</CustomText>
         <Section>
