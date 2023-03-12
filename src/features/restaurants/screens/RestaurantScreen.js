@@ -1,12 +1,13 @@
-import { FlatList, StyleSheet, View, Text } from "react-native";
-import React, { useContext } from "react";
+import { FlatList, StyleSheet, View, TouchableOpacity } from "react-native";
+import React, { useContext, useState } from "react";
 import { Searchbar, ActivityIndicator, MD2Colors } from "react-native-paper";
 import styled from "styled-components";
 import { RestaurantInfoComponent } from "../components/RestaurantInfoComponent";
 import Spacer from "../../../components/Spacer";
 import { RestaurantContext } from "../../../services/restaurants/restaurantContext";
-import { locationRequest } from "../../../services/restaurants/location/locationService";
+import { FavouriteContext } from "../../../services/favourites/FavouriteContext";
 import SearchComponent from "../components/SearchComponent";
+import FavouritesBar from "../../../components/favourites/FavouritesBar";
 
 const MainView = styled(View)`
   flex: 1;
@@ -18,44 +19,49 @@ const LoadingIndicator = styled(ActivityIndicator)`
   justify-content: center;
 `;
 
-const RestaurantScreen = () => {
+const RestaurantScreen = ({ navigation }) => {
   const { isLoading, error, restaurants } = useContext(RestaurantContext);
+  const [isToggled, setIsToggled] = useState(false);
+  const { favourites } = useContext(FavouriteContext);
+
   return (
     <MainView>
-      <SearchComponent />
+      <SearchComponent
+        isFavouritesToggled={isToggled}
+        onFavouritesToggle={() => setIsToggled(!isToggled)}
+      />
+
       {isLoading ? (
         <LoadingIndicator animating={true} color={MD2Colors.red800} />
       ) : (
-        <FlatList
-          data={restaurants}
-          renderItem={({ item }) => {
-            return (
-              <Spacer position="bottom" size="large">
-                <RestaurantInfoComponent restaurant={item} />
-              </Spacer>
-            );
-          }}
-          keyExtractor={(item, index) => index}
-          contentContainerStyle={{ padding: 16 }}
-          showsVerticalScrollIndicator={false}
-        />
+        <>
+          {isToggled && <FavouritesBar favourites={favourites} />}
+
+          <FlatList
+            data={restaurants}
+            renderItem={({ item }) => {
+              return (
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate("RestaurantDetail", {
+                      restaurant: item,
+                    })
+                  }
+                >
+                  <Spacer position="bottom" size="large">
+                    <RestaurantInfoComponent restaurant={item} />
+                  </Spacer>
+                </TouchableOpacity>
+              );
+            }}
+            keyExtractor={(item, index) => index}
+            contentContainerStyle={{ padding: 16 }}
+            showsVerticalScrollIndicator={false}
+          />
+        </>
       )}
     </MainView>
   );
 };
 
 export default RestaurantScreen;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  search: {
-    padding: 16,
-  },
-  list: {
-    flex: 1,
-    padding: 16,
-    backgroundColor: "gray",
-  },
-});

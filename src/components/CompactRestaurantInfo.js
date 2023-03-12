@@ -3,34 +3,35 @@ import React from "react";
 import styled from "styled-components";
 import CustomText from "../components/Text";
 import WebView from "react-native-webview";
-import { Platform } from "react-native";
 
 const CompactImage = styled(Image)`
-  border-radius: 10px;
   width: 120px;
   height: 100px;
+  border-radius: ${(props) => props.theme.sizes[0]};
 `;
 const CompactWebView = styled(WebView)`
-  border-radius: 10px;
   width: 120px;
   height: 100px;
+  border-radius: ${(props) => props.theme.sizes[0]};
 `;
 const Item = styled(View)`
   padding: 10px;
   max-width: 120px;
+  align-items: center;
 `;
 
-const isAndroid = Platform.OS === "android";
-
-const CompactRestaurantInfo = ({ restaurant }) => {
-  const Image = isAndroid ? CompactWebView : CompactImage;
+const CompactRestaurantInfo = ({ restaurant, webView }) => {
   return (
     <Item>
-      <Image
-        source={{
-          uri: restaurant.photos[0],
-        }}
-      />
+      {webView ? (
+        <CompactWebView source={{ uri: restaurant.photos[0] }} />
+      ) : (
+        <CompactImage
+          source={{
+            uri: restaurant.photos[0],
+          }}
+        />
+      )}
       <CustomText center variant="caption" numberOfLines={3}>
         {restaurant.name}
       </CustomText>
