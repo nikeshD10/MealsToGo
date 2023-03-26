@@ -35,7 +35,12 @@ const RestaurantScreen = ({ navigation }) => {
         <LoadingIndicator animating={true} color={MD2Colors.red800} />
       ) : (
         <>
-          {isToggled && <FavouritesBar favourites={favourites} />}
+          {isToggled && (
+            <FavouritesBar
+              favourites={favourites}
+              onNavigate={navigation.navigate}
+            />
+          )}
 
           <FlatList
             data={restaurants}

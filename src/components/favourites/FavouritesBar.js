@@ -9,7 +9,7 @@ const FavouritesWrapper = styled(View)`
   padding: ${(props) => props.theme.space[3]};
 `;
 
-const FavouritesBar = ({ favourites }) => {
+const FavouritesBar = ({ favourites, onNavigate }) => {
   return (
     <FavouritesWrapper>
       <Spacer variant="left.large">
@@ -18,7 +18,6 @@ const FavouritesBar = ({ favourites }) => {
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
         {favourites.map((restaurant) => {
           const key = restaurant.name;
-          console.log("restaurant", restaurant.photos[0]);
           return (
             <Spacer key={key} position="left" size="medium">
               <TouchableOpacity
