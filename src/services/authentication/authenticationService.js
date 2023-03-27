@@ -1,9 +1,10 @@
 import {
   getAuth,
   signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
   initializeAuth,
 } from "firebase/auth";
-import { getApp, getApps, initializeApp } from "firebase/app";
+import { getApps, initializeApp } from "firebase/app";
 import { getReactNativePersistence } from "firebase/auth/react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -16,30 +17,26 @@ const firebaseConfig = {
   appId: "1:574502262054:web:05c53594b4d8f1766d9de7",
 };
 
-let app;
-let auth;
+// export let app;
+// export let auth;
 
-if (getApps().length < 1) {
-  app = initializeApp(firebaseConfig);
-  auth = initializeAuth(app, {
-    persistence: getReactNativePersistence(AsyncStorage),
-  });
-} else {
-  app = initializeApp(firebaseConfig);
-  auth = getAuth(app);
-}
+// if (getApps().length < 1) {
+//   app = initializeApp(firebaseConfig);
+//   auth = initializeAuth(app, {
+//     persistence: getReactNativePersistence(AsyncStorage),
+//   });
+// } else {
+//   app = initializeApp(firebaseConfig);
+//   auth = getAuth(app);
+// }
 
-export const loginRequest = (email, password) => {
-  signInWithEmailAndPassword(auth, "nikita@gmail.com", "nikita2002")
-    .then((userCredential) => {
-      // Signed in
-      const user = userCredential.user;
-      console.log("user", user);
-      setIsAuthenticated(true);
-      // ...
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-    });
-};
+export const app = initializeApp(firebaseConfig);
+export const auth = initializeAuth(app, {
+  persistence: getReactNativePersistence(AsyncStorage),
+});
+
+export const loginRequest = (email, password) =>
+  signInWithEmailAndPassword(auth, email, password);
+
+export const registerRequest = (email, password) =>
+  createUserWithEmailAndPassword(auth, email, password);
